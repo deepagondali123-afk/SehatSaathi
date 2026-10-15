@@ -1,4 +1,4 @@
-
+import MedicineRemindersPreview from './pages/MedicineRemindersPreview';
 import Dashboard from './components/Dashboard';
 import ChatbotPage from './components/ChatbotPage';
 import { Routes, Route } from 'react-router-dom';
@@ -38,6 +38,10 @@ export default function App() {
       <Route path="/login" element={<AuthPage />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/chat" element={<ChatbotPage />} />
+      <Route
+  path="/medicine-reminders-preview"
+  element={<MedicineRemindersPreview />}
+/>
     </Routes>
   );
 }

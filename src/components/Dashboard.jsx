@@ -111,6 +111,7 @@ function HealthIllustration({ variant = 'welcome' }) {
 }
 
 export default function Dashboard() {
+  const [selectedHospital, setSelectedHospital] = useState(null);
   const navigate = useNavigate();
   const [active, setActive] = useState('dashboard');
   const [menuOpen, setMenuOpen] = useState(false);
@@ -139,11 +140,18 @@ export default function Dashboard() {
 
   const notify = (message) => setNotice(message);
 
-  const goTo = (id) => {
-    setActive(id);
-    setMenuOpen(false);
-    setNotice('');
-  };
+  
+const goTo = (id) => {
+  if (id === 'medicine-reminders-preview') {
+    navigate('/medicine-reminders-preview');
+    return;
+  }
+
+  setActive(id);
+  setMenuOpen(false);
+  setNotice('');
+};
+
 
   const addChatFiles = (fileList) => {
     const selected = Array.from(fileList || []);
@@ -437,12 +445,27 @@ export default function Dashboard() {
                   <span className="ss-card-foot">Demo requests <ArrowUpRight size={15} /></span>
                 </button>
 
-                <button className="ss-overview-card" onClick={() => goTo('medicines')}>
-                  <span className="ss-card-icon beige"><Pill size={21} /></span>
-                  <span className="ss-card-label">Medicine Reminders</span>
-                  <b>{remindersEnabled ? 'On' : 'Off'}</b>
-                  <span className="ss-card-foot">Preference only <ArrowUpRight size={15} /></span>
-                </button>
+                <button
+  className="ss-overview-card"
+
+onClick={() => {
+  alert("Medicine card clicked!");
+  navigate("/medicine-reminders-preview");
+}}
+
+>
+  <span className="ss-card-icon beige">
+    <Pill size={21} />
+  </span>
+
+  <span className="ss-card-label">Medicine Reminders</span>
+
+  <b>{remindersEnabled ? 'On' : 'Off'}</b>
+
+  <span className="ss-card-foot">
+    Preference only <ArrowUpRight size={15} />
+  </span>
+</button>
 
                 <button className="ss-overview-card ss-overview-ai" onClick={() => goTo('assistant')}>
                   <span className="ss-card-icon light"><HeartPulse size={21} /></span>
@@ -474,6 +497,10 @@ export default function Dashboard() {
                   {journey.map((step, index) => (
                     <button
                       key={step}
+
+
+
+                      
                       className="ss-journey-step"
                       onClick={() =>
                         goTo(
@@ -770,9 +797,15 @@ export default function Dashboard() {
                       <p><MapPin size={15} /> {location ? `Search area: ${location}` : hospital.address}</p>
                       <span>{hospital.services}</span>
                     </div>
-                    <button className="ss-outline-btn" onClick={() => notify('Hospital contact details require a verified directory integration.')}>
-                      View details <ChevronRight size={15} />
-                    </button>
+                    <button
+  onClick={() =>
+    notify(
+      'Hospital contact, directions and appointment availability require a verified directory integration.'
+    )
+  }
+>
+  View Details
+</button>
                   </article>
                 ))}
                 {filteredHospitals.length === 0 && (
